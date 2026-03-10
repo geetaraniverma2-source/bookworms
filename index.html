@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <title>Book Worms</title>
@@ -16,26 +17,99 @@
 
 <p>Created by Sharanya Srivastava – Age 15</p>
 
-<input type="text" id="search" placeholder="Search your book...">
+<input type="text" id="search" placeholder="Search a book...">
 
 <button onclick="searchBook()">Search</button>
 
 </header>
 
+<hr>
+
+<section>
+
+<h2>Upload Your Book</h2>
+
+<input type="file" id="bookFile" accept=".pdf,.jpg,.png">
+
+<button onclick="uploadBook()">Upload Book</button>
+
+</section>
+
+<hr>
+
 <section>
 
 <h2>Your Library</h2>
 
-<div class="book">
-<h3>Mystery of the Jungle</h3>
-<button>Read</button>
-</div>
+<div id="library"></div>
 
 </section>
 
-<button onclick="upload()">Upload Book</button>
+<script>
 
-<script src="script.js"></script>
+function uploadBook(){
+
+let fileInput = document.getElementById("bookFile");
+
+let file = fileInput.files[0];
+
+if(!file){
+alert("Please choose a file first");
+return;
+}
+
+let library = document.getElementById("library");
+
+let bookDiv = document.createElement("div");
+
+bookDiv.className="book";
+
+let title = document.createElement("h3");
+
+title.innerText = file.name;
+
+let readButton = document.createElement("a");
+
+readButton.href = URL.createObjectURL(file);
+
+readButton.target="_blank";
+
+readButton.innerText="Read Book";
+
+readButton.style.display="block";
+
+readButton.style.marginTop="10px";
+
+bookDiv.appendChild(title);
+
+bookDiv.appendChild(readButton);
+
+library.appendChild(bookDiv);
+
+}
+
+function searchBook(){
+
+let input = document.getElementById("search").value.toLowerCase();
+
+let books = document.querySelectorAll(".book");
+
+books.forEach(book => {
+
+let text = book.innerText.toLowerCase();
+
+if(text.includes(input))
+book.style.display="block";
+
+else
+book.style.display="none";
+
+});
+
+}
+
+</script>
 
 </body>
+
 </html>
